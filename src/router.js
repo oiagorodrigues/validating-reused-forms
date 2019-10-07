@@ -1,24 +1,37 @@
-import Vue from "vue";
-import Router from "vue-router";
-import Home from "./views/Home.vue";
+import Vue from 'vue'
+import Router from 'vue-router'
+import store from './store'
 
-Vue.use(Router);
+const List = () => import(/* webpackChunkName: "list" */ './views/List.vue')
+const New = () => import(/* webpackChunkName: "new" */ './views/New.vue')
+const Show = () => import(/* webpackChunkName: "show" */ './views/Show.vue')
+
+Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: "/",
-      name: "home",
-      component: Home
+      path: '/',
+      name: 'Home',
+      component: List,
+      beforeEnter: (to, from, next) => {
+        store.dispatch('getForms')
+        next()
+      }
     },
     {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+      path: '/new',
+      name: 'New',
+      component: New
+    },
+    {
+      path: '/show/:slug',
+      name: 'Show',
+      component: Show,
+      beforeEnter: (to, from, next) => {
+        store.dispatch('getForm', to.params.slug)
+        next()
+      }
     }
   ]
-});
+})
