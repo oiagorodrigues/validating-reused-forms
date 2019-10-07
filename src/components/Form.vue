@@ -131,7 +131,7 @@ export default {
           reject('Error: Invalid Form!')
         }
         // you can do something with the data here before return it
-        return resolve({ ...this.form })
+        return resolve({ ...this.model })
       })
     },
     handleReset() {
