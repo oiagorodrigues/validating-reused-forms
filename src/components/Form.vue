@@ -112,7 +112,7 @@ export default {
   },
   data() {
     return {
-      model: this.form,
+      model: { ...this.form },
       sexualOptions: [
         { value: null, text: 'Please select an option' },
         { value: 'm', text: 'Masculine' },
